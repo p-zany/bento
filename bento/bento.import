@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+"""Example import configuration."""
+
+# Insert our custom importers path here.
+# (In practice you might just change your PYTHONPATH environment.)
+import sys
+from os import path
+sys.path.insert(0, path.join(path.dirname(__file__)))
+
+from config import settings
+
+from importers.alipay import alipay
+from importers.boc import boc
+from importers.boc import boc_credit
+from importers.cmb import cmb
+from importers.cmb import cmb_credit
+from importers.wechat import wechat
+from importers.citic import citic_credit
+
+from classifier.rule.rule_classify import RuleAccountClassifier
+
+# Initialize classifier
+classifier = RuleAccountClassifier(settings.classifier.rule.rules_path)
+
+
+# Setting this variable provides a list of importer instances.
+CONFIG = [
+    alipay.Importer(
+        settings.importers.alipay.account,
+        settings.importers.alipay.additional_accounts,
+        settings.importers.default.expense_account,
+        classifier=classifier.classify
+    ),
+    boc.Importer(
+        settings.importers.boc.account,
+        settings.importers.default.expense_account,
+        settings.importers.default.income_account,
+        settings.importers.boc.ignore_apps,
+        classifier=classifier.classify
+    ),
+    boc_credit.Importer(
+        settings.importers.boc_credit.account,
+        settings.importers.default.expense_account,
+        settings.importers.boc_credit.asset_account,
+        settings.importers.boc_credit.ignore_apps,
+        classifier=classifier.classify
+    ),
+    citic_credit.Importer(
+        settings.importers.citic_credit.account,
+        settings.importers.default.expense_account,
+        settings.importers.citic_credit.asset_account,
+        settings.importers.citic_credit.ignore_apps,
+        classifier=classifier.classify
+    ),
+    cmb.Importer(
+        settings.importers.cmb.account,
+        settings.importers.default.expense_account,
+        settings.importers.default.income_account,
+        settings.importers.cmb.ignore_apps,
+        classifier=classifier.classify
+    ),
+    cmb_credit.Importer(
+        settings.importers.cmb_credit.account,
+        settings.importers.default.expense_account,
+        settings.importers.cmb_credit.asset_account,
+        settings.importers.cmb_credit.ignore_apps,
+        classifier=classifier.classify
+    ),
+    wechat.Importer(
+        settings.importers.wechat.account,
+        settings.importers.wechat.fee_account,
+        settings.importers.wechat.additional_accounts,
+        settings.importers.default.expense_account,
+        classifier=classifier.classify
+    ),
+]
+
+
+# HOOKS = []

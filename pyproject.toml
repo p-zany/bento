@@ -1,0 +1,30 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "bento"
+version = "v0.0.1"
+description = "A personal finance management system built with Beancount and Fava, providing automated transaction imports and classification."
+authors = ["pzany <p.zhiang@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+packages = [
+    { include = "bento" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+beancount = "2.3.5" # 2.3.6 会引入 pdfminer2 冲突
+loguru = "^0.7.2"
+pdfplumber = "^0.11.4"
+PyYAML = "^6.0.2"
+pandas = "^2.2.3"
+xlrd = "^2.0.1"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.1.1"
+black = "^24.10.0"
+isort = "^5.13.2"
+fava = "^1.29"
+pydantic_settings = "^2.6.1"
