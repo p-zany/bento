@@ -149,6 +149,14 @@ class Importer(importer.ImporterProtocol):
     ) -> Optional[data.Transaction]:
         """Parse a single transaction record."""
         try:
+            # payment method is empty, meaning this transaction has been canceled
+            if not row.payment_method:
+                logger.info(
+                    f"Empty payment method for Transaction {row} in {file_name},"
+                    "assuming it has been canceled"
+                )
+                return None
+
             # 基本信息解析
             transaction_type = row.transaction_category
             payee = row.transaction_counterparty
