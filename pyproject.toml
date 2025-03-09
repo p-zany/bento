@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "bento"
-version = "v0.0.1"
+version = "v0.0.2"
 description = "A personal finance management system built with Beancount and Fava, providing automated transaction imports and classification."
 authors = ["pzany <p.zhiang@gmail.com>"]
 readme = "README.md"
@@ -20,6 +20,7 @@ loguru = "^0.7.2"
 pdfplumber = "^0.11.4"
 PyYAML = "^6.0.2"
 pandas = "^2.2.3"
+python-telegram-bot = "^21.11.1"
 xlrd = "^2.0.1"
 
 [tool.poetry.group.dev.dependencies]
