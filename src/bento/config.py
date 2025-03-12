@@ -98,11 +98,31 @@ class LedgerSettings(BaseSettings):
     duplicate_meta: str = "__duplicate__"
 
 
-class Settings(BaseSettings):
-    app: AppSettings = AppSettings()  # 使用固定的 AppSettings
+class SinkConfig(BaseSettings):
     classifier: ClassifierSettings = ClassifierSettings()
     importers: ImporterSettings = ImporterSettings()
     ledger: LedgerSettings = LedgerSettings()
+
+
+class GmailSourceConfig(BaseSettings):
+    client_secret_file: str = "client_secret.json"
+    client_token_file: str = "client_token.json"
+    service_account_file: str = "service_account.json"
+    history_id: str = ""
+    label: str = "Bento"
+    project_id: str = "Bento"
+    subscription_id: str = ""
+    topic_name: str = ""
+
+
+class SourceConfig(BaseSettings):
+    type: str = "gmail"
+    gmail: GmailSourceConfig = GmailSourceConfig()
+
+
+class Settings(BaseSettings):
+    sink: SinkConfig = SinkConfig()
+    source: SourceConfig = SourceConfig()
 
     def dict_for_api(self):
         data = self.model_dump()
@@ -110,6 +130,3 @@ class Settings(BaseSettings):
 
     class Config:
         env_nested_delimiter = "__"
-
-
-settings = Settings()
